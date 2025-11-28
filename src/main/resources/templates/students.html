@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+<div class="container">
+
+    <h2 class="text-center mb-4">Students Page</h2>
+
+    <!-- Thông báo thành công khi thêm sinh viên -->
+    <div th:if="${successMessage}" class="alert alert-success text-center">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <div class="text-center mb-4">
+        <!-- Nút thêm sinh viên -->
+        <a th:href="@{/students/add}" class="btn btn-primary btn-lg mb-2">+ Add Student</a><br>
+        <!-- Nút quay lại Home -->
+        <a th:href="@{/home}" class="btn btn-secondary btn-lg">Back to Home</a>
+    </div>
+
+    <!-- Bảng danh sách sinh viên -->
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Nếu danh sách rỗng -->
+        <tr th:if="${#lists.isEmpty(list)}">
+            <td colspan="4" class="text-center">Không có sinh viên nào</td>
+        </tr>
+        <!-- Lặp danh sách sinh viên -->
+        <tr th:each="s, i : ${list}">
+            <td th:text="${i.count}"></td>
+            <td th:text="${s.studentCode}"></td>
+            <td th:text="${s.fullName}"></td>
+            <td th:text="${s.address}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Score</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+<div class="container">
+
+    <h2>Add Score</h2>
+
+    <!-- Hiển thị lỗi từ controller -->
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <form th:action="@{/scores/add}" th:object="${score}" method="post">
+
+        <!-- Chọn Student -->
+        <div class="form-group mt-2">
+            <label>Student:</label>
+            <select th:field="*{student.studentId}" class="form-control">
+                <option value="" disabled selected>-- Select Student --</option>
+                <option th:each="st : ${students}" th:value="${st.studentId}" th:text="${st.fullName}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('student')}" th:errors="*{student}" class="text-danger"></div>
+        </div>
+
+        <!-- Chọn Subject -->
+        <div class="form-group mt-2">
+            <label>Subject:</label>
+            <select th:field="*{subject.subjectId}" class="form-control">
+                <option value="" disabled selected>-- Select Subject --</option>
+                <option th:each="sb : ${subjects}" th:value="${sb.subjectId}" th:text="${sb.subjectName}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="text-danger"></div>
+        </div>
+
+        <!-- Score 1 -->
+        <div class="form-group mt-2">
+            <label>Score 1:</label>
+            <input th:field="*{score1}" type="number" step="0.01" min="0" max="10" class="form-control">
+            <div th:if="${#fields.hasErrors('score1')}" th:errors="*{score1}" class="text-danger"></div>
+        </div>
+
+        <!-- Score 2 -->
+        <div class="form-group mt-2">
+            <label>Score 2:</label>
+            <input th:field="*{score2}" type="number" step="0.01" min="0" max="10" class="form-control">
+            <div th:if="${#fields.hasErrors('score2')}" th:errors="*{score2}" class="text-danger"></div>
+        </div>
+
+        <!-- Nút submit và quay về trang Scores -->
+        <div class="mt-3">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a th:href="@{/scores}" class="btn btn-secondary ms-2">Back to Scores</a>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
